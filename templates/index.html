@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<title>Air Conditioner</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<style>
+			#toggleACPower {
+				height: 90%;
+				font-size: 4em;
+				white-space: pre;
+				}
+		</style>
+	</head>
+	<body>
+		<div class="container" style="padding: 20px">
+			<button id="toggleACPower" type="button" class="btn btn-primary btn-block">Toggle<br>AC<br>Power</button>
+		</div>
+	</body>
+	<script>
+		$(document).ready(function(){
+			$("#toggleACPower").click(function(){
+				console.log('clicked');
+				$("#toggleACPower").prop("disabled", true);
+
+				$.post("toggleACPower").always(function(){
+					$("#toggleACPower").prop("disabled", false);
+				});	
+			});		
+		});
+	</script>
+</html>
