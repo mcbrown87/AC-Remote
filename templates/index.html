@@ -5,6 +5,10 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="static/temperature.js"></script>
+		<script src="static/colorMapper.js"></script>
+		<script src="static/view.js"></script>
+		<script src="static/dataServices.js"></script>
 		<style>
 			#toggleACPower {
 				height: 90%;
@@ -20,6 +24,11 @@
 	</body>
 	<script>
 		$(document).ready(function(){
+			var dataAggregator = new DataAggregator()
+			dataAggregator.startCollecting()
+			var views = [new TemperatureView(dataAggregator), new HumidityView(dataAggregator)]
+			var iteration = 0
+
 			$("#toggleACPower").click(function(){
 				console.log('clicked');
 				$("#toggleACPower").prop("disabled", true);
@@ -27,7 +36,12 @@
 				$.post("toggleACPower").always(function(){
 					$("#toggleACPower").prop("disabled", false);
 				});	
-			});		
+			});
+
+			new DefaultView().render()
+			setInterval(() => {
+				views[iteration++ % views.length].render()
+			}, 5000)		
 		});
 	</script>
 </html>
